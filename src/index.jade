@@ -1,0 +1,7 @@
+extends ./layouts/layout.jade
+
+block content
+  h1= welcome
+    ul
+      each project in projects
+        li= project.name
