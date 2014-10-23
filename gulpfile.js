@@ -12,7 +12,12 @@ var config = {
     isProd: process.env.NODE_ENV === 'production'
 };
 
-gulp.task('browserSync', ['jade'], function () {
+gulp.task('help', $.taskListing.withFilters(null, function (task) {
+    var excludes = ['default', 'help', 'browserSync'];
+    return excludes.indexOf(task) > -1;
+}));
+
+gulp.task('browserSync', ['build'], function () {
     browserSync({
         server: {
             baseDir: './build'
@@ -20,7 +25,7 @@ gulp.task('browserSync', ['jade'], function () {
     });
 });
 
-gulp.task('jade', function () {
+gulp.task('build:jade', function () {
     return gulp.src(config.src + '/*.jade')
         .pipe($.jade({
             locals: {
@@ -33,9 +38,8 @@ gulp.task('jade', function () {
         .pipe(reload({ stream: true }));
 });
 
-gulp.task('default', function () {
-    gulp.run('jade');
-});
+gulp.task('build', ['build:jade']);
+gulp.task('default', ['help']);
 
 gulp.task('watch', ['browserSync'], function () {
     gulp.watch(config.src + '/**/*.jade', ['jade']);
