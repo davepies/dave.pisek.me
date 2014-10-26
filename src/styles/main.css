@@ -1,0 +1,18 @@
+@import "fonts.css";
+
+@custom-media --narrow-window screen and (max-width: 30em);
+
+body {
+  font-family: latothin;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+@media (--narrow-window) {
+  body {
+    background: aqua;
+  }
+}
+
