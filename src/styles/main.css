@@ -4,15 +4,26 @@
 
 body {
   font-family: latothin;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
-h1 {
+h1, h2, h3, h4, strong {
   font-weight: normal;
 }
 
+.more--hidden:before {
+  content: 'Read More';
+  display: block;
+}
+
+.more--hidden p {
+  display: none;
+}
+
 @media (--narrow-window) {
-  body {
-    background: aqua;
+  h1 strong {
+    display: block;
   }
 }
 
