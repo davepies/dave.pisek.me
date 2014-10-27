@@ -12,6 +12,7 @@ var critical = require('critical');
 var myth = require('myth');
 var palette = require('rework-palette');
 var imprt = require('rework-import');
+var pureGrids = require('rework-pure-grids');
 
 // data
 var projects = require('./config/projects.json');
@@ -31,11 +32,24 @@ gulp.task('help', $.taskListing.withFilters(null, function (task) {
 gulp.task('build:css', function () {
     return gulp.src(config.src + config.mainCssFile)
         .pipe($.rework(
-            imprt(),
-            palette(),
-            myth(),
-            { sourcemap: !config.isProd }))
+                pureGrids.units({
+                    mediaQueries: {
+                        sm  : 'screen and (min-width: 30em)',
+                        med : 'screen and (min-width: 48em)',
+                        lrg : 'screen and (min-width: 64em)',
+                        xlrg: 'screen and (min-width: 75em)'
+                    },
+                    selectorPrefix: '.dp-'
+                }),
+                imprt(),
+                palette(),
+                myth(),
+                { sourcemap: !config.isProd }
+            )
+        )
+        .pipe($.if(config.isProd, $.csso()))
         .pipe(gulp.dest(config.dest))
+        .pipe($.size({ gzip: true }))
         .pipe(reload({ stream: true }));
 });
 
@@ -52,10 +66,15 @@ gulp.task('build:html', function () {
         .pipe(reload({ stream: true }));
 });
 
+gulp.task('build:js', function () {
+    return gulp.src(config.src + '/scripts/*.js')
+        .pipe(gulp.dest(config.dest));
+});
+
 gulp.task('browserSync', ['build'], function () {
     browserSync({
         server: {
-            baseDir: './build'
+            baseDir: config.dest
         }
     });
 });
@@ -74,14 +93,15 @@ gulp.task('deploy:minifyHTML', ['deploy:critical'], function () {
     return gulp.src(config.dest + '/*.html')
         .pipe($.minifyHtml())
         .pipe(gulp.dest(config.dest))
-        .pipe($.size());
+        .pipe($.size({ gzip: true }));
 });
 
 gulp.task('default', ['help']);
-gulp.task('build', ['build:html', 'build:css']);
+gulp.task('build', ['build:html', 'build:css', 'build:js']);
 gulp.task('deploy', ['deploy:critical', 'deploy:minifyHTML']);
 
 gulp.task('watch', ['browserSync'], function () {
     gulp.watch(config.src + '/**/*.jade', ['build:html']);
     gulp.watch(config.src + '/**/*.css', ['build:css']);
+    gulp.watch(config.src + '/**/*.js', ['build:js']);
 });
