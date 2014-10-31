@@ -1,3 +1,4 @@
+// gulp
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
@@ -13,15 +14,21 @@ var myth = require('myth');
 var palette = require('rework-palette');
 var imprt = require('rework-import');
 var pureGrids = require('rework-pure-grids');
+var colors = require('rework-plugin-colors');
 
 // data
 var projects = require('./config/projects.json');
 
+// env
+var isProd = process.env.NODE_ENV === 'production';
+
+// config
 var config = {
     src: './src',
     dest: './dist',
-    mainCssFile: '/styles/main.css',
-    isProd: process.env.NODE_ENV === 'production'
+    stylesDest: '/styles',
+    // on prod we only compile to one css
+    cssFiles: isProd ? '/styles/main.css' : '/styles/**/*.css',
 };
 
 gulp.task('help', $.taskListing.withFilters(null, function (task) {
@@ -30,25 +37,18 @@ gulp.task('help', $.taskListing.withFilters(null, function (task) {
 }));
 
 gulp.task('build:css', function () {
-    return gulp.src(config.src + config.mainCssFile)
-        .pipe($.rework(
-                pureGrids.units({
-                    mediaQueries: {
-                        sm  : 'screen and (min-width: 30em)',
-                        med : 'screen and (min-width: 48em)',
-                        lrg : 'screen and (min-width: 64em)',
-                        xlrg: 'screen and (min-width: 75em)'
-                    },
-                    selectorPrefix: '.dp-'
-                }),
-                imprt(),
-                palette(),
-                myth(),
-                { sourcemap: !config.isProd }
-            )
-        )
-        .pipe($.if(config.isProd, $.csso()))
-        .pipe(gulp.dest(config.dest))
+
+    var reworkPlugins = [palette(), colors(), myth()];
+
+    if (isProd) {
+        // we want to only compile to one css file
+        reworkPlugins.unshift(imprt());
+    }
+
+    return gulp.src(config.src + config.cssFiles)
+        .pipe($.rework.apply(null, reworkPlugins))
+        .pipe($.if(isProd, $.csso()))
+        .pipe(gulp.dest(config.dest + config.stylesDest))
         .pipe($.size({ gzip: true }))
         .pipe(reload({ stream: true }));
 });
@@ -60,7 +60,7 @@ gulp.task('build:html', function () {
                 welcome: 'hello',
                 projects: projects
             },
-            pretty: !config.isProd
+            pretty: !isProd
         }))
         .pipe(gulp.dest(config.dest))
         .pipe(reload({ stream: true }));
@@ -68,13 +68,16 @@ gulp.task('build:html', function () {
 
 gulp.task('build:js', function () {
     return gulp.src(config.src + '/scripts/*.js')
-        .pipe(gulp.dest(config.dest));
+        .pipe(gulp.dest(config.dest))
+        .pipe(reload({ stream: true }));
 });
 
 gulp.task('browserSync', ['build'], function () {
     browserSync({
+        logLevel: 'silent',
+        logConnections: false,
         server: {
-            baseDir: config.dest
+            baseDir: config.dest,
         }
     });
 });

@@ -12,13 +12,27 @@ h1, h2, h3, h4, strong {
   font-weight: normal;
 }
 
-.more--hidden:before {
+.read-more:before {
   content: 'Read More';
-  display: block;
 }
 
-.more--hidden p {
-  display: none;
+.read-more:hover:before {
+  background: rgba(yellow, 0.4);
+  cursor: pointer;
+}
+
+.read-more--showing:before {
+  content: 'Read Less';
+}
+
+.read-more__content {
+  max-height: 0;
+  transition: max-height .26s cubic-bezier(.98,0,1,.28);
+  overflow: hidden;
+}
+
+.read-more--showing .read-more__content {
+  max-height: 300px;
 }
 
 @media (--narrow-window) {
