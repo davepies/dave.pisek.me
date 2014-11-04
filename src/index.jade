@@ -3,7 +3,7 @@ extends ./layouts/layout.jade
 block content
 
   h1.intro Hi! I am Dave,
-    strong  a Front End Developer. 
+    strong  a Front End Developer.
 
   section.about
 
@@ -12,8 +12,16 @@ block content
     p Yes, I am a Front End Developer. Passionately. JavaScript, HTML and CSS never cease to excite me.
 
     p
-      | So far I've been lucky enough to work with great people at styleflasher.at, madebyprimal.co, worldnomads.com
-      | and news.com.au.
+      | So far I've been lucky enough to work with great people at 
+      -var i = 0
+      each company in companies
+        -if (i === companies.length - 1)
+          |  and 
+        a(href='http://#{company.name}') #{company.name}
+        -if (i < companies.length - 2)
+          | , 
+         - i++
+      |.
 
     .read-more
       .read-more__content

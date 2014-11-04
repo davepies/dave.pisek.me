@@ -18,6 +18,7 @@ var colors = require('rework-plugin-colors');
 
 // data
 var projects = require('./data/projects.json');
+var companies = require('./data/companies.json');
 
 // options
 var minimist = require('minimist');
@@ -70,7 +71,8 @@ gulp.task('build:html', function () {
         .pipe($.jade({
             locals: {
                 welcome: 'hello',
-                projects: projects
+                projects: projects,
+                companies: companies
             },
             pretty: true
         }))
