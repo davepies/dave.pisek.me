@@ -24,7 +24,7 @@
             eventHandler.call(context || null);
             el.removeEventListener(eventName, handleOnce);
         });
-    }
+    };
 
 
     var toggler = new Toggler();
