@@ -17,7 +17,7 @@ var pureGrids = require('rework-pure-grids');
 var colors = require('rework-plugin-colors');
 
 // data
-var projects = require('./config/projects.json');
+var projects = require('./data/projects.json');
 
 // options
 var minimist = require('minimist');
