@@ -1,33 +1,35 @@
 (function () {
 
     function Toggler (options) {
-        options = options || {};
-        this.className = options.className || '.read-more';
-        this.classNameShowing = options.classNameShowing || this.className + '--showing';
+        this.options = options || {};
+        this.className = options.className || 'read-more';
+        this.classNameShowing = options.classNameShowing || (this.className + '--showing');
 
-        this.readMoreContainers = document.querySelectorAll(this.className);
+        this.readMoreContainers = document.querySelectorAll('.' + this.className);
+
+        this.addListeners();
     }
 
     Toggler.prototype.toggle = function (el) {
-        var showingClass = this.classNameShowing.replace('.', '');
-        el.classList[el.classList.contains(showingClass) ? 'remove' : 'add'](showingClass);
+        el.classList[el.classList.contains(this.classNameShowing) ? 'remove' : 'add'](this.classNameShowing);
     };
 
-    Toggler.prototype.bindToggle = function () {
+    Toggler.prototype.addListeners = function () {
         Array.prototype.slice.call(this.readMoreContainers).forEach(function (el) {
-            this.one(el, 'click', this.toggle.bind(this, el));
+            this.addListener(el, 'click', this.toggle.bind(this, el), this.options.once);
         }.bind(this));
     };
 
-    Toggler.prototype.one = function (el, eventName, eventHandler, context) {
-        el.addEventListener(eventName, function handleOnce () {
+    Toggler.prototype.addListener = function (el, eventName, eventHandler, context, once) {
+        el.addEventListener(eventName, function handler () {
             eventHandler.call(context || null);
-            el.removeEventListener(eventName, handleOnce);
+
+            if (once) {
+                el.removeEventListener(eventName, handler);
+            }
         });
     };
 
-
-    var toggler = new Toggler();
-    toggler.bindToggle();
+    var toggler = new Toggler({ once: true });
 
 })();
