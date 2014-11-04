@@ -19,8 +19,20 @@ var colors = require('rework-plugin-colors');
 // data
 var projects = require('./config/projects.json');
 
+// options
+var minimist = require('minimist');
+
+var knownOptions = {
+    string: 'env',
+    default: {
+        env: process.env.NODE_ENV || 'development'
+    }
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
+
 // env
-var isProd = process.env.NODE_ENV === 'production';
+var isProd = options.env === 'production';
 
 // config
 var config = {
@@ -60,7 +72,7 @@ gulp.task('build:html', function () {
                 welcome: 'hello',
                 projects: projects
             },
-            pretty: !isProd
+            pretty: true
         }))
         .pipe(gulp.dest(config.dest))
         .pipe(reload({ stream: true }));
@@ -92,16 +104,26 @@ gulp.task('deploy:critical', ['build'], function (done) {
     }, done);
 });
 
-gulp.task('deploy:minifyHTML', ['deploy:critical'], function () {
+gulp.task('deploy:minifyHTML', ['deploy:critical', 'deploy:useref'], function () {
     return gulp.src(config.dest + '/*.html')
-        .pipe($.minifyHtml())
+        .pipe($.minifyHtml({ loose: true }))
+        .pipe(gulp.dest(config.dest))
+        .pipe($.size({ gzip: true }));
+});
+
+gulp.task('deploy:useref', ['deploy:critical'], function () {
+    var assets = $.useref.assets();
+    return gulp.src(config.dest + '/*.html')
+        .pipe(assets)
+        .pipe(assets.restore())
+        .pipe($.useref())
         .pipe(gulp.dest(config.dest))
         .pipe($.size({ gzip: true }));
 });
 
 gulp.task('default', ['help']);
 gulp.task('build', ['build:html', 'build:css', 'build:js']);
-gulp.task('deploy', ['deploy:critical', 'deploy:minifyHTML']);
+gulp.task('deploy', ['deploy:critical', 'deploy:useref', 'deploy:minifyHTML']);
 
 gulp.task('watch', ['browserSync'], function () {
     gulp.watch(config.src + '/**/*.jade', ['build:html']);

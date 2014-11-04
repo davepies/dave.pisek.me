@@ -31,6 +31,8 @@
     "gulp-rework": "^1.0.2",
     "gulp-size": "^1.1.0",
     "gulp-task-listing": "^0.3.0",
+    "gulp-useref": "^1.0.2",
+    "minimist": "^1.1.0",
     "myth": "^1.2.1",
     "rework": "^1.0.1",
     "rework-bem": "^0.1.1",
