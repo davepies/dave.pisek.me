@@ -6,6 +6,13 @@ var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
+// jshint
+var stylish = require('jshint-stylish');
+
+// browserify
+var browserify = require('browserify');
+var transform = require('vinyl-transform');
+
 // critical css
 var critical = require('critical');
 
@@ -20,25 +27,26 @@ var colors = require('rework-plugin-colors');
 var projects = require('./data/projects.json');
 var companies = require('./data/companies.json');
 
-// options
+// buildOptions
 var minimist = require('minimist');
 
-var knownOptions = {
+var defaultBuildOptions = {
     string: 'env',
     default: {
         env: process.env.NODE_ENV || 'development'
     }
 };
 
-var options = minimist(process.argv.slice(2), knownOptions);
+var buildOptions = minimist(process.argv.slice(2), defaultBuildOptions);
 
 // env
-var isProd = options.env === 'production';
+var isProd = buildOptions.env === 'production';
 
 // config
 var config = {
     src: './src',
     dest: './dist',
+    jsEntry: 'app.js',
     stylesDest: '/styles',
     // on prod we only compile to one css
     cssFiles: isProd ? '/styles/main.css' : '/styles/**/*.css',
@@ -59,6 +67,7 @@ gulp.task('build:css', function () {
     }
 
     return gulp.src(config.src + config.cssFiles)
+        .pipe($.plumber())
         .pipe($.rework.apply(null, reworkPlugins))
         .pipe($.if(isProd, $.csso()))
         .pipe(gulp.dest(config.dest + config.stylesDest))
@@ -81,8 +90,22 @@ gulp.task('build:html', function () {
 });
 
 gulp.task('build:js', function () {
-    return gulp.src(config.src + '/scripts/*.js')
+    var browserified = transform(function (filename) {
+        var b = browserify(filename);
+        return b.bundle();
+    });
+
+    return gulp.src(config.src + '/scripts/**/*.js')
+        .pipe($.if(!isProd, $.plumber()))
+        // run jshint on raw files
+        .pipe($.jshint())
+        .pipe($.jshint.reporter(stylish))
+        // only perform browserify on entry point js
+        .pipe($.filter([config.jsEntry]))
+        .pipe(browserified)
+        .pipe($.if(isProd, $.uglify()))
         .pipe(gulp.dest(config.dest))
+        .pipe($.size())
         .pipe(reload({ stream: true }));
 });
 
