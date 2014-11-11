@@ -2,10 +2,10 @@ extends ./layouts/layout.jade
 
 block content
 
-  h1.intro Hi! I am Dave,
+  h1(am-intro) Hi! I am Dave,
     strong  a Front End Developer.
 
-  section.about
+  section(am-about)
 
     h2 About me
 
@@ -23,8 +23,8 @@ block content
          - i++
       |.
 
-    .read-more
-      .read-more__content
+    div(am-read-more)
+      div(am-read-more-content)
         p I enjoy good tools and frameworks. Especially git, vim, zsh, rework, angular, flux / reactjs, mocha, gulp and vagrant.
 
         p
@@ -32,7 +32,7 @@ block content
           | climb up rocks or indoor-climbing walls. As a born Austrian I eat Schnitzel to keep me going.
 
 
-  section.work
+  section(am-work)
 
     h2 Some of my work
 

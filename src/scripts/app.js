@@ -1,3 +1,5 @@
-var Toggler = require('./Toggler');
+var ReadMore = require('./ReadMore');
 
-var toggler = new Toggler({ once: true });
+var ReadMore = require('./ReadMore');
+
+var readMore = new ReadMore({ once: true });
