@@ -13,11 +13,18 @@ h1, h2, h3, h4, strong {
   font-weight: normal;
 }
 
+[am-intro] {
+  position: relative;
+}
+
 [am-intro]:hover:after {
   content: '✌';
   display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
   animation-name: rotateSlightly;
-  animation-duration: .75s;
+  animation-duration: 1.5s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
 }
