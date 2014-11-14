@@ -1,70 +1,12 @@
+@import "base.css";
 @import "fonts.css";
 @import "animations.css";
 
+@import "modules/intro.css";
+@import "modules/side_navigation.css";
+@import "modules/readmore.css";
+
 @custom-media --narrow-window screen and (max-width: 30em);
-
-body {
-  font-family: latothin;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-h1, h2, h3, h4, strong {
-  font-weight: normal;
-}
-
-[am-intro] {
-  position: relative;
-}
-
-[am-intro]:hover:after {
-  content: '✌';
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  animation-name: rotateSlightly;
-  animation-duration: 1.5s;
-  animation-timing-function: ease;
-  animation-fill-mode: forwards;
-}
-
-[am-read-more]:after {
-  content: 'Read More \279C';
-  font-size: 0.8em;
-  position: relative;
-}
-
-[am-read-more]:hover:after {
-  cursor: pointer;
-  position: relative;
-  animation-name: moveRight;
-  animation-duration: .25s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-fill-mode: backwards;
-  animation-timing-function: ease;
-}
-
-[am-read-more~="showing"]:after {
-  content: '';
-  top: -1000px;
-  cursor: auto;
-}
-
-[am-read-more~="showing"] [am-read-more-content] {
-  max-height: 300px;
-}
-
-[am-read-more-content] {
-  max-height: 0;
-  transition: max-height .26s cubic-bezier(.98,0,1,.28);
-  overflow: hidden;
-}
-
-[am-read-more-content] p:first-child {
-  margin-top: 0;
-}
 
 @media (--narrow-window) {
   h1 strong {

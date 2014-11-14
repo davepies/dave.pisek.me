@@ -1,0 +1,9 @@
+-var i = 0
+each company in companies
+  -if (i === companies.length - 1)
+    |  and 
+  a(href='http://#{company.name}') #{company.name}
+  -if (i < companies.length - 2)
+    | , 
+   - i++
+|.

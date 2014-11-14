@@ -2,40 +2,30 @@ extends ./layouts/layout.jade
 
 block content
 
-  h1(am-intro) Hi! I am Dave,
-    strong  a Front End Developer.
+  include partials/side_navigation
 
-  section(am-about)
+  .content
 
-    h2 About me
+    h1(am-intro) Hi! I am Dave,
+      strong  a Front End Developer.
 
-    p Yes, I am a Front End Developer. Passionately. JavaScript, HTML and CSS never cease to excite me.
+    section(am-about)
+      h2 About me
+      p Yes, I am a Front End Developer. Passionately. JavaScript, HTML and CSS never cease to excite me.
+      p
+        | So far I've been lucky enough to work with great people at 
+        include partials/companies
 
-    p
-      | So far I've been lucky enough to work with great people at 
-      -var i = 0
-      each company in companies
-        -if (i === companies.length - 1)
-          |  and 
-        a(href='http://#{company.name}') #{company.name}
-        -if (i < companies.length - 2)
-          | , 
-         - i++
-      |.
-
-    div(am-read-more)
-      div(am-read-more-content)
-        p I enjoy good tools and frameworks. Especially git, vim, zsh, rework, angular, flux / reactjs, mocha, gulp and vagrant.
-
-        p
-          | When I am not in front of a screen I like to spend time with my family, read books about really much everything or
-          | climb up rocks or indoor-climbing walls. As a born Austrian I eat Schnitzel to keep me going.
+      div(am-read-more)
+        div(am-read-more-content)
+          p I enjoy good tools and frameworks. Especially git, vim, zsh, rework, angular, flux / reactjs, mocha, gulp and vagrant.
+          p
+            | When I am not in front of a screen I like to spend time with my family, read books about really much everything or
+            | climb up rocks or indoor-climbing walls. As a born Austrian I eat Schnitzel to keep me going.
 
 
-  section(am-work)
-
-    h2 Some of my work
-
-    ul
-      each project in projects
-        li= project.name
+    section(am-work)
+      h2 Some of my work
+      ul
+        each project in projects
+          li= project.name

@@ -1,0 +1,38 @@
+[am-read-more]:after {
+  content: 'Read More \279C';
+  color: rgba(black, 0.7);
+  font-size: 0.8em;
+  position: relative;
+}
+
+[am-read-more]:hover:after {
+  cursor: pointer;
+  position: relative;
+  animation-name: moveRight;
+  animation-duration: .25s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-fill-mode: backwards;
+  animation-timing-function: ease;
+}
+
+[am-read-more~="showing"]:after {
+  content: '';
+  top: -1000px;
+  cursor: auto;
+}
+
+[am-read-more~="showing"] [am-read-more-content] {
+  max-height: 300px;
+}
+
+[am-read-more-content] {
+  max-height: 0;
+  transition: max-height .26s cubic-bezier(.98,0,1,.28);
+  overflow: hidden;
+}
+
+[am-read-more-content] p:first-child {
+  margin-top: 0;
+}
+

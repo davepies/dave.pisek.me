@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: latothin;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, strong {
+  font-weight: normal;
+  line-height: 1.2em;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid rgba(black, 0.3);
+}
+
+a:hover {
+  border-color: black;
+}
+
+.content, .side-menu {
+  padding: 1em;
+}
