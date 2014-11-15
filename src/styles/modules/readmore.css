@@ -5,9 +5,8 @@
   position: relative;
 }
 
-[am-read-more]:hover:after {
+[am-read-more~="hiding"]:hover:after {
   cursor: pointer;
-  position: relative;
   animation-name: moveRight;
   animation-duration: .25s;
   animation-iteration-count: infinite;
@@ -16,10 +15,26 @@
   animation-timing-function: ease;
 }
 
+@keyframes remove{
+  0% {
+    opacity: 1;
+  }
+  99% {
+    top: auto;
+  }
+  100% {
+    opacity: 0;
+    top: -1000px;
+  }
+}
+
+
 [am-read-more~="showing"]:after {
-  content: '';
-  top: -1000px;
+  animation-name: remove;
+  animation-duration: .4s;
+  animation-fill-mode: forwards;
   cursor: auto;
+  position: absolute;
 }
 
 [am-read-more~="showing"] [am-read-more-content] {
@@ -28,11 +43,16 @@
 
 [am-read-more-content] {
   max-height: 0;
-  transition: max-height .26s cubic-bezier(.98,0,1,.28);
+  transition: max-height 1s ease;
   overflow: hidden;
+  position: relative;
 }
 
 [am-read-more-content] p:first-child {
   margin-top: 0;
+}
+
+[am-read-more-content] p:last-child {
+  margin-bottom: 0;
 }
 

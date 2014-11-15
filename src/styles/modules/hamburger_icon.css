@@ -1,0 +1,47 @@
+[am-hamburger-icon] { position: absolute; left: 50%; top: 50%; }
+
+[am-hamburger-icon] { cursor: pointer; padding: 10px 35px 16px 0px; }
+
+[am-hamburger-icon] span,
+[am-hamburger-icon] span:before,
+[am-hamburger-icon] span:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 5px;
+  width: 35px;
+  background: white;
+  position: absolute;
+  display: block;
+  content: '';
+}
+
+[am-hamburger-icon] span:before {
+  top: -10px;
+}
+
+[am-hamburger-icon] span:after {
+  bottom: -10px;
+}
+
+[am-hamburger-icon] span,
+[am-hamburger-icon] span:before,
+[am-hamburger-icon] span:after {
+  transition: all 500ms ease-in-out;
+}
+
+[am-hamburger-icon].active span {
+  background-color: transparent;
+}
+
+[am-hamburger-icon].active span:before,
+[am-hamburger-icon].active span:after {
+  top: 0;
+}
+
+[am-hamburger-icon].active span:before {
+  transform: rotate(45deg);
+}
+
+[am-hamburger-icon].active span:after {
+  transform: rotate(-45deg);
+}

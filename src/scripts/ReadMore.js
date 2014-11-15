@@ -2,7 +2,8 @@ var merge = require('merge');
 
 var defaults = {
     sel: '[am-read-more]',
-    attrShowingValue: 'showing'
+    attrShowingValue: 'showing',
+    once: true
 };
 
 
@@ -32,7 +33,7 @@ ReadMore.prototype.toggle = function (el) {
 ReadMore.prototype._attachListeners = function () {
 
     Array.prototype.slice.call(this.readMoreContainers).forEach(function (el) {
-        this._attachListener(el, 'click', this.toggle.bind(this, el), this.options.once);
+        this._attachListener(el, 'click', this.toggle.bind(this, el), this, this.options.once);
     }.bind(this));
 
 };
