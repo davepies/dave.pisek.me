@@ -1,0 +1,2 @@
+@custom-media --narrow-window screen and (max-width: 30em);
+@custom-media --large-window screen and (min-width: 30em);

@@ -1,13 +1,12 @@
-@import "base.css";
-@import "fonts.css";
-@import "animations.css";
+@import "./breakpoints.css";
+@import "./base.css";
+@import "./fonts.css";
+@import "./animations.css";
 
-@import "modules/intro.css";
-@import "modules/side_navigation.css";
-@import "modules/readmore.css";
+@import "./modules/intro.css";
+@import "./modules/side_navigation.css";
+@import "./modules/readmore.css";
 
-@custom-media --narrow-window screen and (max-width: 30em);
-@custom-media --large-window screen and (min-width: 30em);
 
 @media (--narrow-window) {
   h1 strong {

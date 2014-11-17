@@ -22,11 +22,13 @@ var transform = require('vinyl-transform');
 var critical = require('critical');
 
 // rework plugins
-var myth = require('myth');
+// var myth = require('myth');
 var palette = require('rework-palette');
-var imprt = require('rework-import');
-var pureGrids = require('rework-pure-grids');
+var inliner = require('rework-npm');
 var colors = require('rework-plugin-colors');
+var vars = require('rework-vars');
+var calc = require('rework-calc');
+var customMedia = require('rework-custom-media');
 
 // buildOptions
 var minimist = require('minimist');
@@ -73,17 +75,26 @@ gulp.task('help', $.taskListing.withFilters(null, function (task) {
 
 gulp.task('build:css', function () {
 
-    var reworkPlugins = [palette(), colors(), myth()];
-
-    if (isProd) {
-        // we want to only compile to one css file
-        reworkPlugins.unshift(imprt());
-    }
+    var reworkPlugins = [
+        inliner(),
+        customMedia(),
+        palette(),
+        colors(),
+        vars(),
+        calc,
+        { sourcemap: !isProd }
+    ];
 
     return gulp.src(config.src + config.cssFiles)
         .pipe($.plumber())
         .pipe($.rework.apply(null, reworkPlugins))
+        .pipe($.if(!isProd, $.sourcemaps.init()))
+        .pipe($.autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
         .pipe($.if(isProd, $.csso()))
+        .pipe($.if(!isProd, $.sourcemaps.write()))
         .pipe(gulp.dest(config.dest + config.stylesDest))
         .pipe($.size({ gzip: true }))
         .pipe(reload({ stream: true }));
@@ -159,7 +170,7 @@ gulp.task('deploy:critical', ['build'], function (done) {
 gulp.task('deploy:minifyHTML', ['deploy:critical', 'deploy:useref'], function () {
 
     return gulp.src(config.dest + '/*.html')
-        .pipe($.minifyHtml({ loose: true }))
+        .pipe($.minifyHtml({ loose: true, empty: true }))
         .pipe(gulp.dest(config.dest))
         .pipe($.size({ gzip: true }));
 
