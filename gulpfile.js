@@ -59,6 +59,7 @@ var config = {
     stylesDest: '/styles',
     // on prod we only compile to one css
     cssFiles: isProd ? '/styles/main.css' : '/styles/**/*.css',
+    templateFiles: '/templates/*.jade'
 };
 
 
@@ -75,15 +76,19 @@ gulp.task('help', $.taskListing.withFilters(null, function (task) {
 
 gulp.task('build:css', function () {
 
+    var breakPoints = require('./config/breakpoints.json');
+
     var reworkPlugins = [
         inliner(),
-        customMedia(),
+        customMedia(breakPoints),
         palette(),
         colors(),
         vars(),
         calc,
         { sourcemap: !isProd }
     ];
+
+
 
     return gulp.src(config.src + config.cssFiles)
         .pipe($.plumber())
@@ -103,7 +108,7 @@ gulp.task('build:css', function () {
 
 gulp.task('build:html', function () {
 
-    return gulp.src(config.src + '/*.jade')
+    return gulp.src(config.src + config.templateFiles)
         .pipe($.jade({
             locals: {
                 welcome: 'hello',

@@ -1,12 +1,11 @@
-@import "./breakpoints.css";
-@import "./base.css";
-@import "./fonts.css";
-@import "./animations.css";
+@import "./base/typography.css";
+@import "./base/fonts.css";
+
+@import "./utils/animations.css";
 
 @import "./modules/intro.css";
 @import "./modules/side_navigation.css";
 @import "./modules/readmore.css";
-
 
 @media (--narrow-window) {
   h1 strong {

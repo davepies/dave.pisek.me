@@ -1,0 +1,6 @@
+{
+    "map": {
+        "--narrow-window": "screen and (max-width: 30em)",
+        "--large-window": "screen and (min-width: 30em)"
+    }
+}
