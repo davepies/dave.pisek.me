@@ -29,6 +29,7 @@ var colors = require('rework-plugin-colors');
 var vars = require('rework-vars');
 var calc = require('rework-calc');
 var customMedia = require('rework-custom-media');
+var suitConformance = require('rework-suit-conformance');
 
 // buildOptions
 var minimist = require('minimist');
@@ -85,6 +86,7 @@ gulp.task('build:css', function () {
         colors(),
         vars(),
         calc,
+        suitConformance,
         { sourcemap: !isProd }
     ];
 

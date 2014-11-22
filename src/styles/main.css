@@ -5,7 +5,7 @@
 
 @import "./modules/intro.css";
 @import "./modules/side_navigation.css";
-@import "./modules/readmore.css";
+@import "./modules/ReadMore.css";
 
 @media (--narrow-window) {
   h1 strong {

@@ -37,3 +37,15 @@
   }
 }
 
+@keyframes remove{
+  0% {
+    opacity: 1;
+  }
+  99% {
+    top: auto;
+  }
+  100% {
+    opacity: 0;
+    top: -1000px;
+  }
+}

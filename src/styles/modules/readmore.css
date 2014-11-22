@@ -1,11 +1,13 @@
-[am-read-more]:after {
+/** @define ReadMore; use strict */
+
+.ReadMore :after {
   content: 'Read More \279C';
   color: rgba(black, 0.7);
   font-size: 0.8em;
   position: relative;
 }
 
-[am-read-more~="hiding"]:hover:after {
+.ReadMore :hover:after {
   cursor: pointer;
   animation-name: moveRight;
   animation-duration: .25s;
@@ -15,44 +17,30 @@
   animation-timing-function: ease;
 }
 
-@keyframes remove{
-  0% {
-    opacity: 1;
-  }
-  99% {
-    top: auto;
-  }
-  100% {
-    opacity: 0;
-    top: -1000px;
-  }
-}
-
-
-[am-read-more~="showing"]:after {
+.ReadMore.is-showing :after {
   animation-name: remove;
   animation-duration: .4s;
   animation-fill-mode: forwards;
+  animation-iteration-count: 1;
   cursor: auto;
   position: absolute;
 }
 
-[am-read-more~="showing"] [am-read-more-content] {
+.ReadMore.is-showing .ReadMore-content {
   max-height: 300px;
 }
 
-[am-read-more-content] {
+.ReadMore-content {
   max-height: 0;
   transition: max-height 1s ease;
   overflow: hidden;
   position: relative;
 }
 
-[am-read-more-content] p:first-child {
+.ReadMore-content p:first-child {
   margin-top: 0;
 }
 
-[am-read-more-content] p:last-child {
+.ReadMore-content p:last-child {
   margin-bottom: 0;
 }
-

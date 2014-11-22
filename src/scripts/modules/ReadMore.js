@@ -1,15 +1,15 @@
 var merge = require('merge');
 
 var defaults = {
-    sel: '[am-read-more]',
-    attrShowingValue: 'showing',
+    sel: '.ReadMore',
+    showingClassName: 'is-showing',
     once: true
 };
 
 
 function ReadMore (options) {
 
-    options = options || {};
+    options || (options = {});
 
     this.options = merge(options, defaults);
 
@@ -23,18 +23,37 @@ function ReadMore (options) {
 ReadMore.prototype.toggle = function (el) {
 
     var attr = this._normaliseSel(this.options.sel);
-    var newAttrValue = (el.getAttribute(attr) === this.options.attrShowingValue) ? '' : this.options.attrShowingValue;
+    var newAttrValue = (el.getAttribute(attr) === this.options.showingClassName) ? '' : this.options.attrShowingValue;
 
     el.setAttribute(attr, newAttrValue);
 
 };
 
 
+ReadMore.prototype.toggleClassName = function (el, className) {
+
+    if (typeof el !== 'object' && !el.classList) {
+        console.error('Element passed in does not support classList');
+        return;
+    }
+
+    return el.classList.toggle(className);
+
+};
+
 ReadMore.prototype._attachListeners = function () {
 
-    Array.prototype.slice.call(this.readMoreContainers).forEach(function (el) {
-        this._attachListener(el, 'click', this.toggle.bind(this, el), this, this.options.once);
-    }.bind(this));
+    function attachListener (el) {
+        this._attachListener(
+            el,
+            'click',
+            this.toggleClassName.bind(this, el, this.options.showingClassName),
+            this,
+            this.options.once
+        );
+    }
+
+    [].slice.call(this.readMoreContainers).forEach(attachListener, this);
 
 };
 
