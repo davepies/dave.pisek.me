@@ -1,4 +1,6 @@
-.content {
+/** @define SideNavigation; use strict */
+
+.SideNavigation-content {
   min-width: 100%;
   min-height: 100%;
   background-color: #fff;
@@ -10,7 +12,7 @@
   transition: transform .5s ease;
 }
 
-[am-side-menu] {
+.SideNavigation-menu {
   list-style: none;
   background: #fff;
   width: 100%;
@@ -23,24 +25,24 @@
   transition: transform .5s ease;
 }
 
-[am-side-menu-trigger] {
+.SideNavigation-trigger {
   position: absolute;
   clip: rect(0, 0, 0, 0);
 }
 
-[am-side-menu-trigger]:checked ~ .content {
+.SideNavigation-trigger:checked ~ .SideNavigation-content {
   transform: translateX(-100%);
 }
 
-[am-side-menu-trigger]:checked ~ .side-menu {
+.SideNavigation-trigger:checked ~ .SideNavigation-menu {
   transform: translateX(-100%);
 }
 
-[am-side-menu-trigger]:checked ~ label {
+.SideNavigation-trigger:checked ~ .SideNavigation-label {
   transform: rotate(180deg);
 }
 
-label[for="side-menu-trigger"] {
+.SideNavigation-label {
   position: fixed;
   top: 15px;
   right: 15px;
@@ -54,16 +56,18 @@ label[for="side-menu-trigger"] {
 }
 
 @media (--large-window) {
-  [am-side-menu-trigger]:checked ~ label {
+
+  .SideNavigation-trigger:checked ~ label {
     right: calc(20% + 15px);
     transform: none;
   }
 
-  [am-side-menu] {
+  .SideNavigation-trigger:checked ~ .SideNavigation-content {
+    transform: translateX(-20%);
+  }
+
+  .SideNavigation-menu {
     width: 20%;
   }
 
-  [am-side-menu-trigger]:checked ~ .content {
-    transform: translateX(-20%);
-  }
 }

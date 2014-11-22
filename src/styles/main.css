@@ -1,10 +1,13 @@
-@import "./base/typography.css";
-@import "./base/fonts.css";
+@import "./base";
+
+/* @import "./base/typography.css"; */
+/* @import "./base/fonts.css"; */
+/* @import "./base/layout.css"; */
 
 @import "./utils/animations.css";
 
-@import "./modules/intro.css";
-@import "./modules/side_navigation.css";
+@import "./modules/Intro.css";
+@import "./modules/SideNavigation.css";
 @import "./modules/ReadMore.css";
 
 @media (--narrow-window) {
