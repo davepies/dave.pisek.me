@@ -1,0 +1,12 @@
+var gulp = require('gulp');
+
+var runSequence = require('run-sequence');
+
+gulp.task('build', function (cb) {
+
+    runSequence(
+        'build:clean',
+        ['build:jade', 'build:css', 'build:js'],
+    cb);
+
+});

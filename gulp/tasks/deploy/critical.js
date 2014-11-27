@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 var critical = require('critical');
 
-var config = require('../../config.js');
+var config = require('../../config');
 
 gulp.task('deploy:critical', ['build'], function (done) {
 
