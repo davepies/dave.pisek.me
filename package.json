@@ -52,6 +52,7 @@
     "rework-npm": "^1.0.0",
     "rework-palette": "0.0.2",
     "rework-plugin-colors": "^1.0.3",
+    "rework-plugin-ease": "^1.0.1",
     "rework-pure-grids": "^1.0.0",
     "rework-suit-conformance": "^0.4.1",
     "rework-vars": "^3.1.1",

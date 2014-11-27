@@ -22,7 +22,6 @@ var transform = require('vinyl-transform');
 var critical = require('critical');
 
 // rework plugins
-// var myth = require('myth');
 var palette = require('rework-palette');
 var inliner = require('rework-npm');
 var colors = require('rework-plugin-colors');
@@ -30,6 +29,7 @@ var vars = require('rework-vars');
 var calc = require('rework-calc');
 var customMedia = require('rework-custom-media');
 var suitConformance = require('rework-suit-conformance');
+var easeFunctions = require('rework-plugin-ease');
 
 // buildOptions
 var minimist = require('minimist');
@@ -66,7 +66,6 @@ var config = {
 
 ///// Tasks
 
-
 gulp.task('help', $.taskListing.withFilters(null, function (task) {
 
     var excludes = ['default', 'help', 'browserSync'];
@@ -82,6 +81,7 @@ gulp.task('build:css', function () {
     var reworkPlugins = [
         inliner(),
         customMedia(breakPoints),
+        easeFunctions(),
         palette(),
         colors(),
         vars(),
@@ -89,8 +89,6 @@ gulp.task('build:css', function () {
         suitConformance,
         { sourcemap: !isProd }
     ];
-
-
 
     return gulp.src(config.src + config.cssFiles)
         .pipe($.plumber())

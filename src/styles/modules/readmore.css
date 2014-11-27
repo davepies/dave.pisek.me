@@ -14,7 +14,7 @@
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-fill-mode: backwards;
-  animation-timing-function: ease;
+  animation-timing-function: ease-in-out-circ;
 }
 
 .ReadMore.is-showing:after {
