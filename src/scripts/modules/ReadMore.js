@@ -9,7 +9,7 @@ var defaults = {
 
 function ReadMore (options) {
 
-    options || (options = {});
+    options = options || {};
 
     this.options = merge(options, defaults);
 
