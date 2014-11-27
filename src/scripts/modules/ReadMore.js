@@ -1,32 +1,31 @@
 var merge = require('merge');
 
-var defaults = {
-    sel: '.ReadMore',
-    showingClassName: 'is-showing',
-    once: true
-};
+
+module.exports = ReadMore;
 
 
 function ReadMore (options) {
 
     options = options || {};
 
-    this.options = merge(options, defaults);
+    this.options = merge(options, ReadMore.defaults);
 
     this.readMoreContainers = document.querySelectorAll(this.options.sel);
 
-    this._attachListeners();
+    this.startListening();
 
 }
 
 
-ReadMore.prototype.toggle = function (el) {
+ReadMore.defaults = {
+    sel: '.ReadMore',
+    showingClassName: 'is-showing',
+    once: true
+};
 
-    var attr = this._normaliseSel(this.options.sel);
-    var newAttrValue = (el.getAttribute(attr) === this.options.showingClassName) ? '' : this.options.attrShowingValue;
 
-    el.setAttribute(attr, newAttrValue);
-
+ReadMore.events = {
+    CLICK: 'click'
 };
 
 
@@ -41,41 +40,38 @@ ReadMore.prototype.toggleClassName = function (el, className) {
 
 };
 
-ReadMore.prototype._attachListeners = function () {
 
-    function attachListener (el) {
-        this._attachListener(
-            el,
-            'click',
-            this.toggleClassName.bind(this, el, this.options.showingClassName),
-            this,
-            this.options.once
-        );
+ReadMore.prototype.handleEvent = function (e) {
+
+    var hasTriggeredEvent = false;
+
+    switch (e.type) {
+        case ReadMore.events.CLICK:
+            this.onClick(e);
+            hasTriggeredEvent = true;
+            break;
+
     }
 
-    [].slice.call(this.readMoreContainers).forEach(attachListener, this);
+    if (this.once && hasTriggeredEvent) {
+        e.target.removeEventListener(e.type, this);
+    }
 
 };
 
 
-ReadMore.prototype._attachListener = function (el, eventName, eventHandler, context, once) {
+ReadMore.prototype.onClick = function (e) {
 
-    el.addEventListener(eventName, function handler () {
-        eventHandler.call(context || null);
 
-        if (once) {
-            el.removeEventListener(eventName, handler);
-        }
-    });
+    this.toggleClassName(e.target, this.options.showingClassName);
 
 };
 
 
-ReadMore.prototype._normaliseSel = function (sel) {
+ReadMore.prototype.startListening = function () {
 
-    return sel && sel.replace(/(\[|\]|\.|#)/g, '');
+    [].slice.call(this.readMoreContainers).forEach(function (el) {
+        el.addEventListener(ReadMore.events.CLICK, this);
+    }, this);
 
 };
-
-
-module.exports = ReadMore;
