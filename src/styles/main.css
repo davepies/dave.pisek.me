@@ -1,9 +1,5 @@
 @import "./base";
 
-/* @import "./base/typography.css"; */
-/* @import "./base/fonts.css"; */
-/* @import "./base/layout.css"; */
-
 @import "./utils/animations.css";
 
 @import "./modules/Intro.css";
