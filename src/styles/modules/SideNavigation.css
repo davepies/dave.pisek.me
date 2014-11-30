@@ -1,5 +1,10 @@
 /** @define SideNavigation; use strict */
 
+/*
+ * TODO: Refactor Module
+ * - Move label / icon into separate file
+ */
+
 :root {
   --side-nav-padding: 1em;
 }
@@ -44,9 +49,6 @@
   transform: translateX(-100%);
 }
 
-.SideNavigation-trigger:checked ~ .SideNavigation-label {
-  transform: rotate(180deg);
-}
 
 .SideNavigation-label {
   position: fixed;
@@ -56,8 +58,6 @@
   width: 30px;
   height: 30px;
   background-size: contain;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
-  cursor: pointer;
   transition: all .5s ease;
 }
 

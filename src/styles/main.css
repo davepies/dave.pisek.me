@@ -4,6 +4,7 @@
 
 @import "./modules/Intro.css";
 @import "./modules/SideNavigation.css";
+@import "./modules/SideNavigationIcon.css";
 @import "./modules/ReadMore.css";
 
 @media (--narrow-window) {
