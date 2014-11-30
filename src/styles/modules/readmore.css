@@ -1,29 +1,29 @@
 /** @define ReadMore; use strict */
 
 .ReadMore:after {
-  content: 'Read More \279C';
-  color: rgba(black, 0.7);
-  font-size: 0.8em;
   position: relative;
+  color: rgba(black, 0.7);
+  content: 'Read More \279C';
+  font-size: 0.8em;
 }
 
 .ReadMore:hover:after {
   cursor: pointer;
   animation-name: moveRight;
   animation-duration: .25s;
+  animation-timing-function: ease-in-out-circ;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-fill-mode: backwards;
-  animation-timing-function: ease-in-out-circ;
 }
 
 .ReadMore.is-showing:after {
+  position: absolute;
+  cursor: auto;
   animation-name: remove;
   animation-duration: .4s;
-  animation-fill-mode: forwards;
   animation-iteration-count: 1;
-  cursor: auto;
-  position: absolute;
+  animation-fill-mode: forwards;
 }
 
 .ReadMore.is-showing .ReadMore-content {
@@ -31,10 +31,10 @@
 }
 
 .ReadMore-content {
+  position: relative;
+  overflow: hidden;
   max-height: 0;
   transition: max-height 1s ease;
-  overflow: hidden;
-  position: relative;
 }
 
 .ReadMore-content p:first-child {

@@ -18,12 +18,12 @@
 
 @keyframes rotateSlightly {
   0% {
-    transform: rotate(0);
     opacity: 0;
+    transform: rotate(0);
   }
   25% {
-    transform: rotate(25deg) translateY(-2px);
     opacity: 1;
+    transform: rotate(25deg) translateY(-2px);
   }
   50% {
     transform: rotate(-25deg) translateY(-4px);
@@ -32,8 +32,8 @@
     opacity: 1;
   }
   100% {
-    transform: rotate(-10deg) translateY(0);
     opacity: 0;
+    transform: rotate(-10deg) translateY(0);
   }
 }
 
@@ -45,7 +45,7 @@
     top: auto;
   }
   100% {
-    opacity: 0;
     top: -1000px;
+    opacity: 0;
   }
 }
