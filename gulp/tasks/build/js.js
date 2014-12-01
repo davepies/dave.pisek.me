@@ -13,6 +13,11 @@ var config = require('../../config');
 
 gulp.task('build:js', function () {
 
+    // main browserify bundle
+    var browserifyEntryFilter = $.filter([config.js.browserifyEntry]);
+    // js that needs to be inlined
+    var inlineJsFilter = $.filter([config.js.inlineFolder]);
+
     var browserified = transform(function (filename) {
         var b = browserify(filename);
         return b.bundle();
@@ -24,11 +29,16 @@ gulp.task('build:js', function () {
         .pipe($.jshint())
         .pipe($.jshint.reporter(stylish))
         // only perform browserify on entry point js
-        .pipe($.filter([config.js.browserifyEntry]))
+        // .pipe($.filter([config.js.browserifyEntry]))
+        .pipe(browserifyEntryFilter)
         .pipe(browserified)
         .pipe($.if(config.isProd, $.uglify()))
         .pipe(gulp.dest(config.js.dest))
         .pipe($.size())
+        .pipe(browserifyEntryFilter.restore())
+        .pipe(inlineJsFilter)
+        .pipe($.if(config.isProd, $.uglify()))
+        .pipe(gulp.dest(config.js.dest))
         .pipe(reload({ stream: true }));
 
 });

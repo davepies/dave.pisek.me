@@ -21,6 +21,7 @@ module.exports = {
     js: {
         src: src + '/scripts/**/*.js',
         dest: dest + '/scripts',
+        inlineFolder: 'inline/**/*.js',
         browserifyEntry: 'app.js'
     },
     css: {

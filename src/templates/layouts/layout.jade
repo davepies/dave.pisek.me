@@ -6,6 +6,8 @@ html(lang="en")
     link(rel="stylesheet" href="styles/main.css")
     meta(name="viewport" content="width=device-width, initial-scale=1, minimal-ui")
 
+    script(src="./scripts/inline/loadFonts.js" inline)
+
   body
 
     include ../partials/side_navigation
@@ -14,4 +16,4 @@ html(lang="en")
 
         block content
 
-        script(src="scripts/app.js" defer)
+        script(src="scripts/app.js" sync)

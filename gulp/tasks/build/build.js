@@ -7,6 +7,8 @@ gulp.task('build', function (cb) {
     runSequence(
         'build:clean',
         ['build:jade', 'build:css', 'build:js'],
-    cb);
+        ['build:inlineSources'],
+        cb
+    );
 
 });
