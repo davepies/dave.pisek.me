@@ -6,6 +6,7 @@
 @import "./modules/SideNavigation.css";
 @import "./modules/SideNavigationIcon.css";
 @import "./modules/ReadMore.css";
+@import "./modules/Projects.css";
 
 @media (--narrow-window) {
   h1 strong {

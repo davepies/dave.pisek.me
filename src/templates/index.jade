@@ -1,8 +1,10 @@
 extends layouts/layout.jade
 
 block content
-    h1.Intro.u-center Hi! I am Dave,
-      strong  a Front End Developer.
+    h1.Intro.u-center Hi! I am Dave, 
+        strong a somehow 
+        span.Intro-fancy fancy 
+        strong Front End Developer.
 
     section.About.u-center
 
@@ -20,8 +22,14 @@ block content
             | climb up rocks or indoor-climbing walls. As a born Austrian I eat Schnitzel to keep me going.
 
 
-    section.Work.u-center
-      h2 Some of my work
+    section.Projects.u-center
+      h2 Some of the projects I worked on
       ul
         each project in projects
-          li= project.name
+            li
+              .Projects-project-content
+                h3= project.name
+                  p
+                    strong= project.company
+                    p
+                      span= project.description

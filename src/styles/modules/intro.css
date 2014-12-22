@@ -1,5 +1,15 @@
+/** @define Intro; use strict */
+
 .Intro {
   position: relative;
   margin-top: 5rem;
   margin-bottom: 5rem;
+}
+
+.Intro-fancy {
+  background-image: linear-gradient(92deg,#f35626,#feab3a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hue 60s infinite linear;
+  color: #f35626;
 }
