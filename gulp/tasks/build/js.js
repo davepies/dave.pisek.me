@@ -6,9 +6,7 @@ var transform = require('vinyl-transform');
 
 // hint reporter
 var stylish = require('jshint-stylish');
-
 var reload = require('browser-sync').reload;
-
 var config = require('../../config');
 
 gulp.task('build:js', function () {
@@ -19,7 +17,7 @@ gulp.task('build:js', function () {
     var inlineJsFilter = $.filter([config.js.inlineFolder]);
 
     var browserified = transform(function (filename) {
-        var b = browserify(filename);
+        var b = browserify(filename, { debug: !config.isProd });
         return b.bundle();
     });
 
