@@ -6,5 +6,9 @@
 }
 
 section {
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
+}
+
+.content, .side-menu {
+  padding: 1em;
 }

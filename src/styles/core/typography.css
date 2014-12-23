@@ -22,7 +22,3 @@ a {
 a:hover {
   border-color: black;
 }
-
-.content, .side-menu {
-  padding: 1em;
-}
