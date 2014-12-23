@@ -2,7 +2,7 @@ var ReadMore = require('./modules/ReadMore');
 var Slider = require('./modules/Slider');
 
 var readMore = new ReadMore({ once: true });
-var slider = new Slider(document.querySelector('.slider'), { hello: 'hello', arr: [1] });
+var slider = new Slider(document.querySelector('.Projects'), { hello: 'hello', arr: [1] });
 
 
 // Breakpoints Test
