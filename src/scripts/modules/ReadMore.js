@@ -1,14 +1,13 @@
-var merge = require('merge');
-
-
-module.exports = ReadMore;
+var objectAssign = require('object-assign');
 
 
 function ReadMore (options) {
 
     options = options || {};
 
-    this.options = merge(options, ReadMore.defaults);
+    this.options = {};
+
+    objectAssign(this.options, ReadMore.defaults, options);
 
     this.readMoreContainers = document.querySelectorAll(this.options.sel);
 
@@ -75,3 +74,8 @@ ReadMore.prototype.startListening = function () {
     }, this);
 
 };
+
+
+module.exports = ReadMore;
+
+
