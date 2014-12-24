@@ -21,7 +21,7 @@
     "express": "^4.9.8",
     "merge": "^1.2.0",
     "object-assign": "^2.0.0",
-    "snapsvg": "^0.3.0"
+    "snapsvg": "git://github.com/sethvincent/Snap.svg#a34b8af69b"
   },
   "devDependencies": {
     "browser-sync": "^1.5.8",
