@@ -38,11 +38,11 @@ function Slider(el, options) {
 
     if (this.items.length > 1) {
         this._addNav();
+        this._addEventListeners();
     }
 
     this._addSVGs();
 
-    // this._addEventListeners();
 
 }
 
@@ -60,6 +60,33 @@ Slider.defaults = {
         }
     }
 
+};
+
+
+Slider.prototype.handleEvent = function (e) {
+
+    switch (e.target) {
+        case this.navNext:
+            this._navigate('next');
+            break;
+        case this.navPrev:
+            this._navigate('prev');
+            break;
+    }
+
+};
+
+
+Slider.prototype._addEventListeners = function () {
+
+    this.navPrev.addEventListener('click', this);
+    this.navNext.addEventListener('click', this);
+
+};
+
+
+Slider.prototype._navigate = function (dir) {
+    console.log(dir);
 };
 
 

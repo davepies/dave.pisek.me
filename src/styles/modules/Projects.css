@@ -1,6 +1,26 @@
 /** @define Projects; use strict */
 
+.Projects {
+  overflow: hidden;
+}
+
 .Projects ul {
-  list-style: none;
   padding: 0;
+  overflow: hidden;
+  list-style: none;
+}
+
+.Projects svg {
+  fill: rgba(0, 0, 0, 0.05);
+}
+
+.Projects li {
+  position: relative;
+  float: left;
+}
+
+.Projects-content {
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
