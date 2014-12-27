@@ -28,6 +28,7 @@ function Slider(el, options) {
 
     this.itemsList = this.el.querySelector('ul');
     this.items     = Array.prototype.slice.call(this.itemsList.querySelectorAll('li'));
+    this.itemsCount = this.items.length;
 
     this.curr = 0;
     this.prev = 0;
@@ -36,7 +37,7 @@ function Slider(el, options) {
 
     this._initStyles();
 
-    if (this.items.length > 1) {
+    if (this.itemsCount > 1) {
         this._addNav();
         this._addEventListeners();
     }
@@ -49,8 +50,8 @@ function Slider(el, options) {
 
 Slider.defaults = {
 
-    speed: 500,
-    easing: 'ease',
+    duration: 400,
+    easing: 'cubic-bezier(.8,0,.2,1)',
     svgTemplate: '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="{path}"/></svg>',
     paths: {
         rect : 'M33,0h41c0,0,0,9.871,0,29.871C74,49.871,74,60,74,60H32.666h-0.125H6c0,0,0-10,0-30S6,0,6,0H33',
@@ -63,45 +64,177 @@ Slider.defaults = {
 };
 
 
+Slider.events = {
+    CLICK: 'click',
+    TRANSITION_END: dom.transitionEndEventName
+};
+
+
+/**
+ * onClick
+ *
+ * @param e
+ * @return {undefined}
+ */
+Slider.prototype.onClick = function (e) {
+    if (e.target === this.navNext) {
+        this._navigate('next');
+    }
+
+    if (e.target === this.navPrev) {
+        this._navigate('prev');
+    }
+};
+
+
+/**
+ * onTransitionEnd
+ *
+ * @param e
+ * @return {undefined}
+ */
+Slider.prototype.onTransitionEnd = function (e) {
+
+    this.isAnimating = false;
+
+};
+
+
+
+/**
+ * handleEvent Interface
+ * https://developer.mozilla.org/en-US/docs/Web/API/EventListener
+ *
+ * @param e
+ * @return {undefined}
+ */
 Slider.prototype.handleEvent = function (e) {
 
-    switch (e.target) {
-        case this.navNext:
-            this._navigate('next');
+    switch (e.type) {
+        case Slider.events.CLICK:
+            this.onClick(e);
             break;
-        case this.navPrev:
-            this._navigate('prev');
+        case Slider.events.TRANSITION_END:
+            this.onTransitionEnd(e);
             break;
     }
 
 };
 
 
+/**
+ * Adds click and transition end events
+ *
+ * @return {undefined}
+ */
 Slider.prototype._addEventListeners = function () {
 
-    this.navPrev.addEventListener('click', this);
-    this.navNext.addEventListener('click', this);
+    this.navPrev.addEventListener(Slider.events.CLICK, this);
+    this.navNext.addEventListener(Slider.events.CLICK, this);
 
-};
+    this.itemsList.addEventListener(Slider.events.TRANSITION_END, this);
 
-
-Slider.prototype._navigate = function (dir) {
-    console.log(dir);
 };
 
 
 /**
- * _initStyles
+ * Handles the navigation to the desired direction (next | prev)
+ *
+ * @param {String} dir
+ * @return {undefined}
+ */
+Slider.prototype._navigate = function (dir) {
+
+    if (this.isAnimating ||
+            dir === 'next' && this.curr >= this.itemsCount - 1 ||
+            dir === 'prev' && this.curr <= 0) {
+        return false;
+    }
+
+    this.isAnimating = true;
+    this.direction = dir;
+
+    this.prev = this.curr;
+
+    if (dir === 'next') {
+        this.curr += 1;
+    } else {
+        this.curr -= 1;
+    }
+
+    this._slide();
+
+};
+
+
+/**
+ * Slider transition
+ *
+ * @return {undefined}
+ */
+Slider.prototype._startSlider = function () {
+    //@TODO: Add navToggle
+    var translateVal = -1 * this.curr * 100 / this.itemsCount;
+    this.itemsList.style.transform = 'translate3d(' + translateVal + '%,0,0)';
+};
+
+
+/**
+ * SVG Morphing and sliding
+ *
+ * @return {undefined}
+ */
+Slider.prototype._slide = function () {
+
+    var pathCurvedLeft  = this.options.paths.curve.left;
+    var pathCurvedRight = this.options.paths.curve.right;
+    var pathRect        = this.options.paths.rect;
+
+    var pathPrev = this.direction === 'next' ? pathCurvedLeft : pathCurvedRight;
+    var pathCurr = this.direction === 'next' ? pathCurvedRight : pathCurvedLeft;
+
+    var prevItem = this.items[this.prev];
+    var currItem = this.items[this.curr];
+
+    var duration = this.options.duration;
+
+    // morph on exiting slide to "curved"
+    prevItem.path.stop().animate({
+            path: pathPrev
+        },
+        duration * 0.5,
+        mina.easeout);
+
+    // start the slider
+    setTimeout(this._startSlider.bind(this), duration * 0.2);
+
+    // change path on entering slide to "curved"
+    currItem.querySelector('path').setAttribute('d', pathCurr);
+
+    // morph back to "rectangular"
+    setTimeout(function () {
+        currItem.path.stop().animate({
+            'path': pathRect
+        },
+        duration * 3,
+        mina.elastic);
+    }, duration * 0.5);
+
+};
+
+
+/**
+ * Set the widths and transition properties
  *
  * @private
  * @return {undefined}
  */
 Slider.prototype._initStyles = function () {
 
-    this.itemsList.style.width      = 100 * this.items.length + '%';
-    this.itemsList.style.transition = 'transform ' + this.options.speed + 'ms ' + this.options.easing;
+    this.itemsList.style.width      = 100 * this.itemsCount + '%';
+    this.itemsList.style.transition = 'transform ' + this.options.duration + 'ms ' + this.options.easing;
 
-    var itemWidth = 100 / this.items.length;
+    var itemWidth = 100 / this.itemsCount;
     this.items.forEach(function (item) {
         item.style.width = itemWidth + '%';
     }, this);
@@ -110,7 +243,7 @@ Slider.prototype._initStyles = function () {
 
 
 /**
- * _addNav
+ * Add the nav element and next/prev arrows
  *
  * @return {undefined}
  */
@@ -127,7 +260,7 @@ Slider.prototype._addNav = function() {
 
 
 /**
- * _addArrow
+ * Creates a span el with an arrow
  *
  * @private
  * @param {String} className
@@ -148,10 +281,10 @@ Slider.prototype._addArrow = function (navElem, className, content, disabled) {
 
 
 /**
- * _createSVG
+ * Create a new svg dom fragment
  *
  * @param {String} html
- * @return {undefined}
+ * @return {DOMFragement}
  */
 Slider.prototype._createSVG = function (html) {
 
@@ -169,7 +302,7 @@ Slider.prototype._createSVG = function (html) {
 
 
 /**
- * _addSVGs
+ * Creates an appends SVG to each element
  *
  * @return {undefined}
  */

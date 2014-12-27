@@ -6,7 +6,7 @@
  */
 
 :root {
-  --side-nav-padding: 1em;
+  --side-nav-padding: 0;
 }
 
 .SideNavigation-content {
