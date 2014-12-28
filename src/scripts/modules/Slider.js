@@ -175,6 +175,7 @@ Slider.prototype._navigate = function (dir) {
 Slider.prototype._startSlider = function () {
     //@TODO: Add navToggle
     var translateVal = -1 * this.curr * 100 / this.itemsCount;
+    this.itemsList.style.WebkitTransform = 'translate3d(' + translateVal + '%,0,0)';
     this.itemsList.style.transform = 'translate3d(' + translateVal + '%,0,0)';
 };
 
@@ -231,13 +232,16 @@ Slider.prototype._slide = function () {
  */
 Slider.prototype._initStyles = function () {
 
-    this.itemsList.style.width      = 100 * this.itemsCount + '%';
-    this.itemsList.style.transition = 'transform ' + this.options.duration + 'ms ' + this.options.easing;
-
     var itemWidth = 100 / this.itemsCount;
-    this.items.forEach(function (item) {
+
+    this.items.forEach(function setItemWidth (item) {
         item.style.width = itemWidth + '%';
     }, this);
+
+    this.itemsList.style.width      = 100 * this.itemsCount + '%';
+
+    this.itemsList.style.WebkitTransition = '-webkit-transform ' + this.options.duration + 'ms ' + this.options.easing;
+    this.itemsList.style.transition = 'transform ' + this.options.duration + 'ms ' + this.options.easing;
 
 };
 
