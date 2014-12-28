@@ -6,7 +6,7 @@
  */
 
 :root {
-  --side-nav-padding: 0;
+  --side-nav-padding: 1rem;
 }
 
 .SideNavigation-content {
@@ -15,7 +15,7 @@
   right: 0;
   bottom: 100%;
   z-index: 1;
-  padding: var(--side-nav-padding);
+  padding: 0;
   min-width: 100%;
   min-height: 100%;
   background-color: #fff;

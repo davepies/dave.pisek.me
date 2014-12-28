@@ -5,19 +5,24 @@
  * - Move label / icon into separate file
  */
 
-.SideNavigationIcon { cursor: pointer; padding: 10px 35px 16px 0px; }
+.SideNavigationIcon {
+  padding: 10px 35px 10px 0px;
+  border: 5px solid rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
 
 .SideNavigationIcon span,
 .SideNavigationIcon span:before,
 .SideNavigationIcon span:after {
-  cursor: pointer;
-  border-radius: 1px;
-  height: 5px;
-  width: 35px;
-  background: black;
   position: absolute;
   display: block;
+  width: 35px;
+  height: 5px;
+  border-radius: 1px;
+  background: black;
   content: '';
+  cursor: pointer;
 }
 
 .SideNavigationIcon span:before {

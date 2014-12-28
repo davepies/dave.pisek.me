@@ -1,5 +1,9 @@
 /** @define ReadMore; use strict */
 
+.ReadMore {
+  display: inline;
+}
+
 .ReadMore:after {
   position: relative;
   color: rgba(black, 0.7);

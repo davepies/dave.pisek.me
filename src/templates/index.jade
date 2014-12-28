@@ -23,13 +23,13 @@ block content
 
 
     section.Projects
-      h2 Some of the projects I worked on
+      h2.Projects-heading Some of the projects I worked on
       ul
         each project in projects
             li
               .Projects-content
                 h3= project.name
-                  p
-                    strong= project.company
-                    p
-                      span= project.description
+                p
+                  strong= project.company
+                p
+                  span= project.description
