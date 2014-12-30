@@ -59,13 +59,19 @@ Slider.defaults = {
             right : 'M33,0h41c0,0,5,9.871,5,29.871C79,49.871,74,60,74,60H32.666h-0.125H6c0,0,5-10,5-30S6,0,6,0H33',
             left : 'M33,0h41c0,0-5,9.871-5,29.871C69,49.871,74,60,74,60H32.666h-0.125H6c0,0-5-10-5-30S6,0,6,0H33'
         }
+    },
+    classNames: {
+        nav: 'Projects-nav',
+        next: 'Projects-nav-next',
+        prev: 'Projects-nav-prev',
+        navDisabled: 'Projects-nav-disabled'
     }
 
 };
 
 
 Slider.events = {
-    CLICK: 'click',
+    CLICK: 'ontouchstart' in window ? 'touchstart' : 'click',
     TRANSITION_END: dom.transitionEndEventName
 };
 
@@ -199,6 +205,8 @@ Slider.prototype._slide = function () {
 
     var duration = this.options.duration;
 
+    this._toggleNavControls();
+
     // morph on exiting slide to "curved"
     prevItem.path.stop().animate({
             path: pathPrev
@@ -255,8 +263,10 @@ Slider.prototype._addNav = function() {
 
     var nav = document.createElement('nav');
 
-    this.navPrev = this._addArrow(nav, 'prev', '&lt;', true);
-    this.navNext = this._addArrow(nav, 'next', '&gt;');
+    classie.add(nav, this.options.classNames.nav);
+
+    this.navNext = this._addArrow(nav, this.options.classNames.next, '&gt;');
+    this.navPrev = this._addArrow(nav, this.options.classNames.prev, '&lt;', true);
 
     this.el.appendChild(nav);
 
@@ -277,7 +287,7 @@ Slider.prototype._addArrow = function (navElem, className, content, disabled) {
     elem.className = className;
     elem.innerHTML = content;
     if (disabled) {
-        classie.add(elem, 'disabled');
+        classie.add(elem, this.options.classNames.navDisabled);
     }
     navElem.appendChild(elem);
     return elem;
@@ -323,6 +333,30 @@ Slider.prototype._addSVGs = function () {
         item.path = s.select('path');
     }
 
+};
+
+
+/**
+ * Enable / Disable classes on nav arrows
+ *
+ * @return {undefined}
+ */
+Slider.prototype._toggleNavControls = function() {
+    var disabledClassName = this.options.classNames.navDisabled;
+    switch(this.curr) {
+        case 0:
+            classie.remove( this.navNext, disabledClassName );
+            classie.add( this.navPrev, disabledClassName );
+            break;
+        case this.itemsCount - 1:
+            classie.add( this.navNext, disabledClassName );
+            classie.remove( this.navPrev, disabledClassName );
+            break;
+        default:
+            classie.remove( this.navNext, disabledClassName );
+            classie.remove( this.navPrev, disabledClassName );
+            break;
+    }
 };
 
 

@@ -7,8 +7,8 @@
 }
 
 .Projects-heading {
-  padding-left: 1rem;
   padding-right: 1rem;
+  padding-left: 1rem;
 }
 
 .Projects ul {
@@ -36,4 +36,34 @@
   height: 100%;
   justify-content: center;
   align-content: center;
+}
+
+.Projects-nav span {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  font-size: 2rem;
+  line-height: 2rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s ease-in-out;
+}
+
+.Projects-nav-next {
+  opacity: 0.3;
+  right: 50%;
+  transform: translateX(120%);
+}
+
+.Projects-nav-prev {
+  opacity: 0.3;
+  left: 50%;
+  transform: translateX(-120%);
+}
+
+.Projects-nav-disabled {
+  opacity: 0.1;
 }

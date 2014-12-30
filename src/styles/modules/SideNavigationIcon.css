@@ -7,8 +7,8 @@
 
 .SideNavigationIcon {
   padding: 10px 35px 10px 0px;
-  border: 5px solid rgba(255, 255, 255, 0.85);
-  background-color: rgba(255, 255, 255, 0.85);
+  border: 5px solid var(--side-background-color);
+  background-color: var(--side-background-color);
   cursor: pointer;
 }
 
@@ -20,7 +20,7 @@
   width: 35px;
   height: 5px;
   border-radius: 1px;
-  background: black;
+  background: #959595;
   content: '';
   cursor: pointer;
 }

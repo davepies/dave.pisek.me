@@ -24,7 +24,7 @@ ReadMore.defaults = {
 
 
 ReadMore.events = {
-    CLICK: 'click'
+    CLICK: 'ontouchstart' in window ? 'touchstart' : 'click'
 };
 
 
@@ -77,5 +77,3 @@ ReadMore.prototype.startListening = function () {
 
 
 module.exports = ReadMore;
-
-
