@@ -10,6 +10,12 @@
   border: 5px solid var(--side-background-color);
   background-color: var(--side-background-color);
   cursor: pointer;
+  opacity: 1;
+  transition: all .25s ease-in-out;
+}
+
+.SideNavigationIcon--muted {
+  opacity: 0.2;
 }
 
 .SideNavigationIcon span,
