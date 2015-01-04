@@ -28,7 +28,7 @@ var changeSideNavigationState = debounce((function () {
             sideNavigationIcon.classList.remove(mutedClassName);
             muted = false;
         }
-        lastScrollPoint = po;
+        lastScrollPoint = scrollPoint;
     };
 })(), 10);
 
