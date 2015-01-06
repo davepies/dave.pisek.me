@@ -32,11 +32,11 @@ gulp.task('build:js', function () {
         .pipe(browserified)
         .pipe($.if(config.isProd, $.uglify()))
         .pipe(gulp.dest(config.js.dest))
+        .pipe(reload({ stream: true }))
         .pipe($.size())
         .pipe(browserifyEntryFilter.restore())
         .pipe(inlineJsFilter)
         .pipe($.if(config.isProd, $.uglify()))
-        .pipe(gulp.dest(config.js.dest))
-        .pipe(reload({ stream: true }));
+        .pipe(gulp.dest(config.js.dest));
 
 });
